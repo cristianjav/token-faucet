@@ -1,8 +1,32 @@
-# Getting Started with Create React App
+# TOKEN FAUCET
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este proyecto fue creado con [Create React App](https://github.com/facebook/create-react-app).
+Tambien se usó [Hardhat](https://github.com/nomiclabs/hardhat).
 
-## Available Scripts
+## Pasos para iniciarlo.
+
+Se debe iniciar un nodo de Hardhat:
+### `npx hardhat node`
+
+Se deben compilar los contratos:
+### `npx hardhat compile`
+
+Se deben deployar los contratos y guardar la address del contrato:
+### `npx hardhat run './scripts/deploy.js' --network local`
+
+Luego hay que configurar CONTRACT_ADDRESS editando el archivo:
+### `./src/constantsa/addresses.js`
+
+Solo queda ejecutar el frontend:
+### `npm start`
+
+## Config de MetaMask
+En MetaMask se debe seleccionar la red localhost.
+
+Al ejecutar el primer paso de la sección anterior Hardhat mostrará
+10 address y sus privates keys. Se debe copiar la private key de la primer address e importarla en MetaMask. (Se importa la primera porque es la address que usa Hardhat por defecto para deployar contratos.)
+
+## Scripts disponibles para React (frontend)
 
 In the project directory, you can run:
 
@@ -13,11 +37,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
@@ -44,27 +63,3 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

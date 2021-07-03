@@ -75,6 +75,6 @@ describe("Faucet.", function() {
     await token.connect(user).faucet();
 
     //Result
-    expect(await token.connect(user).checkPermiso()).to.equal(false);
+    expect(await token.connect(user).checkPermiso(user.address)).to.equal(false);
   });
 });

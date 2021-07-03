@@ -9,11 +9,11 @@ contract TokenFaucet is ERC20, Ownable {
     mapping(address => uint256) private _ultimoClaim;
 
     /**
-    * El supply total de tokens quedan en el contrato y son distribuidos a travéz de la faucet y el farmeo.
-    * El owner del contrato decide cuantos token se pueden reclamar en la faucet.
-    * El owner del contrato decide cada cuanto tiempo se pueden reclamar tokens.
-    * Una vez deployado el contrato el owner debe setear _cantidadDeTokens y _cantidadDeMinutos.
-    */
+     * El supply total de tokens quedan en el contrato y son distribuidos a travéz de la faucet y el farmeo.
+     * El owner del contrato decide cuantos token se pueden reclamar en la faucet.
+     * El owner del contrato decide cada cuanto tiempo se pueden reclamar tokens.
+     * Una vez deployado el contrato el owner debe setear _cantidadDeTokens y _cantidadDeMinutos.
+     */
     constructor(string memory name, string memory symbol) ERC20(name, symbol) {
         _mint(address(this), 1000 * 10**18);
     }

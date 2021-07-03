@@ -1,36 +1,31 @@
-import { ethers } from "ethers";
-import { useState } from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
-import Message from './Message.js';
+import { Contract } from "@ethersproject/contracts"
+import { useState, useContext } from "react"
+import { Card, Button, Row, Col } from "react-bootstrap"
+import { useWeb3Context } from "web3-react"
+import Message from './Message'
+import ContractContext from "../utils/contractContext"
 
 const Faucet = (props) => {
-    const [userBalance, setUserBalance] = useState();
-    const [showBalance, setShowBalance] = useState();
+    const contractData = useContext(ContractContext)
+    const context = useWeb3Context()
+
+    const [userBalance, setUserBalance] = useState()
+    const [showBalance, setShowBalance] = useState()
 
     async function faucet() {
-        if (!typeof window.ethereum !== 'undefined') {
-            const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
-            const contract = new ethers.Contract(props.tokenAddress, props.tokenABI.abi, signer);
-
-            contract.faucet(account[0], 1);
-        }
+        const contract = new Contract(contractData.address, contractData.abi, context.library)
+        contract.faucet()
     }
 
     async function balance() {
         if (showBalance) {
-            setShowBalance(false);
+            setShowBalance(false)
         } else {
-            if (!typeof window.ethereum !== 'undefined') {
-                const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                const provider = new ethers.providers.Web3Provider(window.ethereum);
-                const contract = new ethers.Contract(props.tokenAddress, props.tokenABI.abi, provider);
-                const balance = await contract.balanceOf(account[0]);
+            const contract = new Contract(contractData.address, contractData.abi, context.library)
+            const balance = await contract.balanceOf(context.account)
 
-                setUserBalance(balance.toString());
-                setShowBalance(true);
-            }
+            setUserBalance(balance.toString())
+            setShowBalance(true)
         }
     }
 
@@ -65,6 +60,6 @@ const Faucet = (props) => {
                 </Col>
             </Row>
         </div>
-    );
+    )
 }
 export default Faucet

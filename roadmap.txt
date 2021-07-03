@@ -1,0 +1,5 @@
+Escribo acá algunos pasos para seguir creando el token.
+1- Faucet
+2- Farm
+2- Lend
+Quizás debería crear otros tokens para crear dinámica.
