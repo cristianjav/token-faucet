@@ -13,7 +13,8 @@ const Faucet = (props) => {
     const [showBalance, setShowBalance] = useState()
 
     async function faucet() {
-        const contract = new Contract(contractData.address, contractData.abi, context.library)
+        const signer = context.library.getSigner(context.account)
+        const contract = new Contract(contractData.address, contractData.abi, signer)
         contract.faucet()
     }
 

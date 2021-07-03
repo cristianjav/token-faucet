@@ -16,22 +16,22 @@ function App() {
   return (
     <div className='row align-items-center'>
       <Web3Provider connectors={connectors} libraryName='ethers.js'>
-        <Container>
-          <Encabezado />
-          <Row>
-            <Col>
-              <Faucet/>
-            </Col>
-            <Col>
-              <Sender/>
-            </Col>
-          </Row>
-          <Row>
-            <NetworkManager>
-              <Admin/>
-            </NetworkManager>
-          </Row>
-        </Container>
+        <NetworkManager>
+          <Container>
+            <Encabezado />
+            <Row>
+              <Col>
+                <Faucet />
+              </Col>
+              <Col>
+                <Sender />
+              </Col>
+            </Row>
+            <Row>
+              <Admin />
+            </Row>
+          </Container>
+        </NetworkManager>
       </Web3Provider>
     </div>
   )

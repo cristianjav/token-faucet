@@ -24,7 +24,10 @@ Solo queda ejecutar el frontend:
 En MetaMask se debe seleccionar la red localhost.
 
 Al ejecutar el primer paso de la sección anterior Hardhat mostrará
-10 address y sus privates keys. Se debe copiar la private key de la primer address e importarla en MetaMask. (Se importa la primera porque es la address que usa Hardhat por defecto para deployar contratos.)
+10 addresses y sus privates keys. Se debe copiar la private key de la primer address e importarla en MetaMask. (Se importa la primera porque es la address que usa Hardhat por defecto para deployar contratos.)
+
+## Config de la faucet
+Se debe setear el monto que entrega la faucet en cada reclamo.
 
 ## Scripts disponibles para React (frontend)
 
