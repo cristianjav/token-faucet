@@ -3,7 +3,7 @@ hre = require('hardhat');
 async function main() {
     const [deployer] = await hre.ethers.getSigners();
     const FaucetToken = await hre.ethers.getContractFactory('TokenFaucet');
-    const faucettoken = await FaucetToken.deploy('TokenFaucet', 'TKNFCT');
+    const faucettoken = await FaucetToken.deploy();
 
     await faucettoken.deployed();
 

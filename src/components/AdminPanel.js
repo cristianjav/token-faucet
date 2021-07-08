@@ -4,14 +4,12 @@ import { useWeb3Context } from "web3-react"
 import ContractContext from "../utils/contractContext"
 import { Row, Col, Card, Button, InputGroup, FormControl } from "react-bootstrap";
 
-const Admin = (props) => {
+function Admin() {
     const contractData = useContext(ContractContext)
     const context = useWeb3Context()
 
     const [isOwner, setIsOwner] = useState()
     const [amountTkn, setAmountTkn] = useState()
-
-    
 
     useEffect(() => {
         checkIfOwner()
@@ -20,7 +18,7 @@ const Admin = (props) => {
     async function checkIfOwner() {
         const contract = new Contract(contractData.address, contractData.abi, context.library)
         const owner = await contract.owner()
-        if (owner.toLowerCase() == context.account.toLowerCase()) {
+        if (owner.toLowerCase() === context.account.toLowerCase()) {
             setIsOwner(true)
         }
     }
@@ -33,6 +31,7 @@ const Admin = (props) => {
 
     return (
         <div>
+            {isOwner ? 
             <Row>
                 <Col>
                     <Card>
@@ -51,6 +50,9 @@ const Admin = (props) => {
                     </Card>
                 </Col>
             </Row>
+            :
+            null
+            }
         </div>
     )
 }
