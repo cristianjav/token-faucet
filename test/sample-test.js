@@ -3,7 +3,7 @@ const { expect } = require("chai");
 describe("Deploy & Initial Supply", function() {
   it("Debería devolver la cantidad inicial de tokens.", async function() {
     const Token = await ethers.getContractFactory("TokenFaucet");
-    const token = await Token.deploy("Token Faucet", "TKNFCT");
+    const token = await Token.deploy();
     await token.deployed();
 
     expect(await token.totalSupply()).to.equal(ethers.BigNumber.from('1000000000000000000000'));
@@ -13,7 +13,7 @@ describe("Deploy & Initial Supply", function() {
 describe("Custodia del supply", function(){
   it("El total del supply debería estar en el contrato.", async function() {
     const Token = await ethers.getContractFactory("TokenFaucet");
-    const token = await Token.deploy("Token Faucet", "TKNFCT");
+    const token = await Token.deploy();
     await token.deployed();
     const totalSupply = await token.totalSupply();
     const balanceContrato = await token.balanceOf(token.address);
@@ -25,7 +25,7 @@ describe("El owner setea la cantidad de tokens que entrega la faucet.", function
   it("Debería cambiar la cantidad de tokens que entrega la faucet a 1.", async function() {
     //Deploy
     const Token = await ethers.getContractFactory("TokenFaucet");
-    const token = await Token.deploy("Token Faucet", "TKNFCT");
+    const token = await Token.deploy();
     await token.deployed();
     //Seteo cantidad
     const cantidad = ethers.BigNumber.from('1000000000000000000');
@@ -42,7 +42,7 @@ describe("Faucet.", function() {
     const [, user] = await ethers.getSigners();
     //Deploy
     const Token = await ethers.getContractFactory('TokenFaucet');
-    const token = await Token.deploy('TokenFaucet', 'TKNFCT');
+    const token = await Token.deploy();
     await token.deployed();
     //Seteo la cantidad a entregar
     const cantidad = ethers.BigNumber.from('1000000000000000000');
@@ -62,7 +62,7 @@ describe("Faucet.", function() {
     const [, user] = await ethers.getSigners();
     //Deploy
     const Token = await ethers.getContractFactory('TokenFaucet');
-    const token = await Token.deploy('TokenFaucet', 'TKNFCT');
+    const token = await Token.deploy();
     await token.deployed();
     //Seteo la cantidad a entregar
     const cantidad = ethers.BigNumber.from('1000000000000000000');

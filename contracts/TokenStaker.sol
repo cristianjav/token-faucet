@@ -22,7 +22,7 @@ contract TokenStacker is ERC20("StakedToken", "STKD") {
 
     mapping(address => UserInfo) public userData;
 
-    /// @notice El ratio de entrega de tokens. Porcentaje por bloque.
+    /// @dev El ratio de entrega de tokens. Porcentaje por bloque.
     uint256 private _ratio;
 
     event Deposit(address _user, uint256 _amount);

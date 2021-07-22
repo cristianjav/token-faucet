@@ -1,4 +1,5 @@
-require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-waffle")
+require("dotenv").config()
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -23,7 +24,16 @@ module.exports = {
   networks: {
     hardhat: {
       chainId: 1337
-    }
+    },
+    goerli: {
+      url: `${process.env.GOERLI_ENDPOINT}`,
+      accounts: [`0x${process.env.PRIVATE_KEY}`]
+    },
+    arbitrum: {
+      url: 'https://rinkeby.arbitrum.io/rpc',
+      gasPrice: 0,
+      accounts: [`0x${process.env.PRIVATE_KEY}`]
+    },
   },
   solidity: "0.8.3",
 };

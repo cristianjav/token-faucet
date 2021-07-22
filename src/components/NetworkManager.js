@@ -11,7 +11,9 @@ export default function NetworkManager({ children }) {
     if (!context.active && !context.error) {
         return 'Cargando...'
     } else if (context.error) {
+        console.log(context.error)
         return 'Hubo un error.'
+        
     } else {
         return children
     }

@@ -9,7 +9,7 @@ const Encabezado = (props) => {
                 <p>¡Apretá los botones!</p>
             </Jumbotron>
         </div>
-    )
+    );
 }
 
 export default Encabezado;

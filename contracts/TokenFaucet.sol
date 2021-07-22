@@ -5,7 +5,8 @@ pragma solidity ^0.8.3;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "hardhat/console.sol";
-
+/// @author Cristianjav
+/// @title Un token con faucet.
 contract TokenFaucet is ERC20("TokenFaucet", "TokenFCT"), AccessControl {
     /// @dev Cantidad de tokens que entregará la faucet en cada claim.
     uint256 private _cantidadDeTokens;
@@ -20,13 +21,13 @@ contract TokenFaucet is ERC20("TokenFaucet", "TokenFCT"), AccessControl {
     mapping(address => uint256) private _ultimoClaim;
     
     /// @notice Se emite cada vez que alguien claimea tokens.
-    event tokenClaimed(address claimer, uint amount, uint time);
+    event TokenClaimed(address claimer, uint amount, uint time);
 
     /// @notice Se emite cada vez que el owner setea los minutos.
-    event minutosChanged(uint oldMinutos, uint newMinutos, uint time);
+    event MinutosChanged(uint oldMinutos, uint newMinutos, uint time);
 
     /// @notice Se emite cada vez que el owner setea la cantidad de tokens que entrega la faucet.
-    event amountChanged(uint oldAmount, uint newAmount, uint time);
+    event AmountChanged(uint oldAmount, uint newAmount, uint time);
 
     /// @notice Este rol puede setear el monto que distribuye la faucet y el tiempo entre claimeo
     bytes32 public constant TOKEN_FAUCET_MANAGER_ROLE = keccak256("TOKEN_FAUCET_MANAGER_ROLE");
@@ -72,13 +73,11 @@ contract TokenFaucet is ERC20("TokenFaucet", "TokenFCT"), AccessControl {
         _transfer(address(this), msg.sender, _cantidadDeTokens);
         _ultimoClaim[msg.sender] = block.timestamp;
 
-        emit tokenClaimed(msg.sender, _cantidadDeTokens, block.timestamp);
+        emit TokenClaimed(msg.sender, _cantidadDeTokens, block.timestamp);
     }
 
-    /**
-     * @notice Funcion para comprobar si un usuario puede claimear o no.
-     * @param _address La direccion del usuario que se comprueba.
-     */
+    /// @notice Funcion para comprobar si un usuario puede claimear o no.
+    /// @param _address La direccion del usuario que se comprueba.
     function checkPermiso(address _address) public view returns (bool) {
         if (_ultimoClaim[_address] > (block.timestamp - _cantidadDeMinutos)) {
             return false;
@@ -86,10 +85,8 @@ contract TokenFaucet is ERC20("TokenFaucet", "TokenFCT"), AccessControl {
         return true;
     }
 
-    /**
-     * @notice Setea el monto de tokens que se distribuyen cada vez que alguien reclama en la faucet.
-     * @param _amount Cantidad de tokens a repartir.
-     */
+    /// @notice Setea el monto de tokens que se distribuyen cada vez que alguien reclama en la faucet.
+    /// @param _amount Cantidad de tokens a repartir.
     function setAmount(uint256 _amount) external onlyRole(TOKEN_FAUCET_MANAGER_ROLE) {
         console.log(
             "[Contrato] Se setea la cantidad de tokens a entregar: ",
@@ -99,21 +96,17 @@ contract TokenFaucet is ERC20("TokenFaucet", "TokenFCT"), AccessControl {
         uint256 amountAnterior = _cantidadDeTokens;
         _cantidadDeTokens = _amount;
 
-        emit amountChanged(amountAnterior, _amount, block.timestamp);
+        emit AmountChanged(amountAnterior, _amount, block.timestamp);
     }
 
-    /**
-     * @notice Devuelve la cantidad de tokens que se entregan en la faucet.
-     */
+    /// @notice Devuelve la cantidad de tokens que se entregan en la faucet.
     function amount() public view returns (uint256) {
         return _cantidadDeTokens;
     }
 
-    /**
-     * @notice Setea el tiempo de espera entre cada reclamo. Modifica el valor _cantidadDeMinutos.
-     * Si _cantidadDeMinutos es 0 la faucet se puede usar sucesivamente hasta quedarse sin fondos.
-     * @param _minutos Cantidad de minutos
-     */
+    /// @notice Setea el tiempo de espera entre cada reclamo. Modifica el valor _cantidadDeMinutos.
+    /// Si _cantidadDeMinutos es 0 la faucet se puede usar sucesivamente hasta quedarse sin fondos.
+    /// @param _minutos Cantidad de minutos
     function setMinutos(uint256 _minutos) external onlyRole(TOKEN_FAUCET_MANAGER_ROLE) {
         console.log(
             "[Contrato] Se setea la cantidad de minutos de espera de la faucet: ",
@@ -121,12 +114,10 @@ contract TokenFaucet is ERC20("TokenFaucet", "TokenFCT"), AccessControl {
         );
         uint256 minutosAnterior = _cantidadDeMinutos;
         _cantidadDeMinutos = _minutos;
-        emit minutosChanged(_minutos, minutosAnterior, block.timestamp);
+        emit MinutosChanged(_minutos, minutosAnterior, block.timestamp);
     }
 
-    /**
-     * @notice Devuelve la cantidad de minutos de espera que tiene el reclamo.
-     */
+    /// @notice Devuelve la cantidad de minutos de espera que tiene el reclamo.
     function getMinutos() public view returns (uint256) {
         return _cantidadDeMinutos;
     }
@@ -152,5 +143,10 @@ contract TokenFaucet is ERC20("TokenFaucet", "TokenFCT"), AccessControl {
     function setStackerAddress(address _address) external onlyRole(TOKEN_FAUCET_MANAGER_ROLE) {
         require(_address != address(0), "Faucet: Zero address");
         _stackerContractAddress = _address;
+    }
+
+    /// @dev Funcion que comprueba si un usuario tiene un rol
+    function comprobarSiManager(address _user) public view returns(bool) {
+        return hasRole(TOKEN_FAUCET_MANAGER_ROLE, _user);
     }
 }

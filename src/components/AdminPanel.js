@@ -5,33 +5,38 @@ import ContractContext from "../utils/contractContext"
 import { Row, Col, Card, Button, InputGroup, FormControl } from "react-bootstrap";
 
 function Admin() {
-    const contractData = useContext(ContractContext)
-    const context = useWeb3Context()
+    const contractData = useContext(ContractContext);
+    const context = useWeb3Context();
 
-    const [isOwner, setIsOwner] = useState()
-    const [amountTkn, setAmountTkn] = useState()
+    const [isManager, setIsManager] = useState();
+    const [amountTkn, setAmountTkn] = useState();
 
     useEffect(() => {
-        checkIfOwner()
+        checkIfManager();
     });
 
-    async function checkIfOwner() {
-        const contract = new Contract(contractData.address, contractData.abi, context.library)
-        const owner = await contract.owner()
-        if (owner.toLowerCase() === context.account.toLowerCase()) {
-            setIsOwner(true)
+    async function checkIfManager() {
+        const signer = context.library.getSigner(context.account);
+        const contract = new Contract(contractData.address, contractData.abi, signer);
+
+        let manager = await contract.comprobarSiManager(context.account);
+        if (manager) {
+            console.log("Es: ", context.account);
+            setIsManager(true);
+        } else {
+            setIsManager(false);
         }
     }
 
     async function setAmount() {
-        const signer = context.library.getSigner(context.account)
-        const contract = new Contract(contractData.address, contractData.abi, signer)
-        contract.setAmount(amountTkn)
+        const signer = context.library.getSigner(context.account);
+        const contract = new Contract(contractData.address, contractData.abi, signer);
+        contract.setAmount(amountTkn);
     }
 
     return (
         <div>
-            {isOwner ? 
+            {isManager ?
             <Row>
                 <Col>
                     <Card>
@@ -50,9 +55,7 @@ function Admin() {
                     </Card>
                 </Col>
             </Row>
-            :
-            null
-            }
+           : null }
         </div>
     )
 }
