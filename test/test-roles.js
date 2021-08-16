@@ -10,13 +10,14 @@ describe("Deploy & Initial Supply", function() {
   });
 
   it("El owner debería tener el rol de Manager.", async function() {
+    [owner, user] = await ethers.getSigners();
     const Token = await ethers.getContractFactory("TokenFaucet");
     const token = await Token.deploy();
     await token.deployed();
 
-    rol = await token.comprobarSiManager();
+    rol = await token.comprobarSiManager(owner.address);
     expect(rol).to.equal(true);
-  })
+  });
 
   it("Otra address no debería tener el rol de Manager.", async function() {
     [owner, user] = await ethers.getSigners();
@@ -24,7 +25,7 @@ describe("Deploy & Initial Supply", function() {
     const token = await Token.deploy();
     await token.deployed();
 
-    rol = await token.connect(user).comprobarSiManager();
+    rol = await token.comprobarSiManager(user.address);
     expect(rol).to.equal(false);
-  })
+  });
 });

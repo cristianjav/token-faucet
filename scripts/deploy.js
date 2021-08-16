@@ -9,11 +9,13 @@ async function main() {
 
     const balanceOfContract = await faucettoken.balanceOf(faucettoken.address);
     const manager = await faucettoken.comprobarSiManager(deployer.address);
+    const balance = await deployer.getBalance();
 
-    console.log('Contract deployed by: ', deployer.address);
+    //console.log('Contract deployed by: ', deployer.address);
     console.log('FaucetToken deployed to: ', faucettoken.address);
-    console.log('Balance de TKNFCT en contrato: ', balanceOfContract.toString());
-    console.log('El deployer es manager: ', manager);
+    console.log('Balance: ', balance.toString());
+    //console.log('Balance de TKNFCT en contrato: ', balanceOfContract.toString());
+    //console.log('El deployer es manager: ', manager);
 }
 
 main()

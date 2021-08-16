@@ -110,10 +110,10 @@ contract TokenFaucet is ERC20("TokenFaucet", "TokenFCT"), AccessControl {
     function setMinutos(uint256 _minutos) external onlyRole(TOKEN_FAUCET_MANAGER_ROLE) {
         console.log(
             "[Contrato] Se setea la cantidad de minutos de espera de la faucet: ",
-            _minutos
+            _minutos * 1 minutes
         );
         uint256 minutosAnterior = _cantidadDeMinutos;
-        _cantidadDeMinutos = _minutos;
+        _cantidadDeMinutos = _minutos * 1 minutes;
         emit MinutosChanged(_minutos, minutosAnterior, block.timestamp);
     }
 
